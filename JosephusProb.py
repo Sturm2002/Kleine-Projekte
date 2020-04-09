@@ -106,8 +106,8 @@ def KillPersons():
                 Personen.pop(i+1)
             
             
-            print(i)
-            print(len(Personen))
+            #print(i)
+            #print(len(Personen))
             sleep(0.5)
     else:
         pass
@@ -139,6 +139,6 @@ while running:
     sleep(0.1)
 
 # Made By Alex Bruksch / Sturm2002 
-# 6.4.2020 
+# 7.4.2020 
 
     
