@@ -234,8 +234,6 @@ def Turn():
 		wn.update()
 		return None
 
-		
-
 	if showing == "Right":
 		showing = "Down"
 		dgshowing = "Down"
