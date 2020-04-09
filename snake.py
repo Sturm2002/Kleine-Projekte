@@ -182,4 +182,4 @@ while True:
 			move()
 
 # Made By Alex Bruksch / Sturm2002
-# Somewhere end 2019
+# Somewhere end 2019 
