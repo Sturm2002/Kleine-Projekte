@@ -264,4 +264,4 @@ while True :
 		wn.update()
 		
 # Made by Sturm2002 / Sturm2002
-# Somewhere end 2019
+# Somewhere end 2019 
