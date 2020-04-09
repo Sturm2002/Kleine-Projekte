@@ -139,6 +139,6 @@ while running:
     sleep(0.1)
 
 # Made By Alex Bruksch / Sturm2002 
-# 6.4.2020
+# 6.4.2020 
 
     
