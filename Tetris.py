@@ -763,4 +763,8 @@ while True:
 		showing = "Up"
 		dgshowing = "Up"
 		SyncPos()
+
+# Made by Alex Bruksch / Sturm2002
+# Somewhere beginning 2020
+
 		

@@ -122,3 +122,6 @@ while True:
     except KeyboardInterrupt:
         sleep(5)
         exit()
+
+# Made By Alex Bruksch / Sturm2002
+# 25.2.2020

@@ -262,4 +262,6 @@ while True :
 	else :
 		win()
 		wn.update()
-		# made by Sturm2002
+		
+# Made by Sturm2002 / Sturm2002
+# Somewhere end 2019

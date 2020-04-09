@@ -137,4 +137,8 @@ while running:
 
     wn.update()
     sleep(0.1)
+
+# Made By Alex Bruksch / Sturm2002 
+# 6.4.2020
+
     

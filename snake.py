@@ -180,3 +180,6 @@ while True:
 				pos.write("x = {} \n y = {}".format(posx, posy), align="center", font=("Courier", 12))
 
 			move()
+
+# Made By Alex Bruksch / Sturm2002
+# Somewhere end 2019
