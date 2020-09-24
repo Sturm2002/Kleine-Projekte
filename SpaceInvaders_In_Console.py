@@ -66,6 +66,7 @@ def FieldToString():
                                         break
                                 else:
                                     Output_String += " "
+    Output_String += """Move with <- / -> \nShoot with Space """
 
 pressed = False
 AllowShoot = True
@@ -116,7 +117,6 @@ class Enemy():
     def Goto(self,NewXpos, NewYpos):
         self.Ypos = NewYpos
         self.Xpos = NewXpos
-
 
 class Player():
     def __init__(self,StartPosX,StartPosY):
@@ -178,6 +178,7 @@ def NextRound():
     global Output_String,Enemys,Bullets
     Bullets.clear()
     Enemys.clear()
+    NoCol = True
 
     Output_String = """
     _   _  _______   _______  ______ _____ _   _ _   _______ 
@@ -193,8 +194,25 @@ def NextRound():
         os.system("cls")
 
     for i in range(CurrentRound +3):
-        En = Enemy(random.randint(3,PlayField_Lenght-3),random.randint(-6,2))
+        Randx = random.randint(3,PlayField_Lenght-3)
+        Randy = random.randint(-6,2)
+        
+        while NoCol == True:  
+            if len(Enemys) >= 1:
+                for En in Enemys:
+                    if (Randx >= En.Xpos -1 and Randx <= En.Xpos +1) and (Randy == En.Ypos or Randy == En.Ypos + 1 or Randy == En.Ypos -1):
+                        NoCol = True
+                        Randx = random.randint(3,PlayField_Lenght-3)
+                        Randy = random.randint(-6,2)    
+                    else:
+                        NoCol = False
+            else:
+                NoCol = False
+                    
+        En = Enemy(Randx,Randy)
         Enemys.append(En)
+        
+        
 
 def CheckAlive():
     global Enemys,Bullets
@@ -208,9 +226,6 @@ def CheckAlive():
             AmountLivingBull += 1
     return AmountLivingEn,AmountLivingBull
     
-
-
-
 for i in range(3):
     En = Enemy(random.randint(3,PlayField_Lenght),random.randint(-6,2))
     Enemys.append(En)
