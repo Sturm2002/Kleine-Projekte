@@ -1,0 +1,12 @@
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\bin\Debug\Pong_Alex_Bruksch.exe.config
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\bin\Debug\Pong_Alex_Bruksch.exe
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\bin\Debug\Pong_Alex_Bruksch.pdb
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\bin\Debug\Pong_Alex_Bruksch.xml
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.frm_pong.resources
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.Resources.resources
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.vbproj.GenerateResource.cache
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.vbproj.CoreCompileInputs.cache
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.exe
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.xml
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.pdb
+C:\Users\sturm\source\repos\Pong_Alex_Bruksch\Pong_Alex_Bruksch\obj\Debug\Pong_Alex_Bruksch.vbprojAssemblyReference.cache
