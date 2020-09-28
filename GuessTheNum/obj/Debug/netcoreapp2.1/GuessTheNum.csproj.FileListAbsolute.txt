@@ -1,0 +1,11 @@
+C:\Users\sturm\source\repos\GuessTheNum\bin\Debug\netcoreapp2.1\GuessTheNum.deps.json
+C:\Users\sturm\source\repos\GuessTheNum\bin\Debug\netcoreapp2.1\GuessTheNum.runtimeconfig.json
+C:\Users\sturm\source\repos\GuessTheNum\bin\Debug\netcoreapp2.1\GuessTheNum.runtimeconfig.dev.json
+C:\Users\sturm\source\repos\GuessTheNum\bin\Debug\netcoreapp2.1\GuessTheNum.dll
+C:\Users\sturm\source\repos\GuessTheNum\bin\Debug\netcoreapp2.1\GuessTheNum.pdb
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.csprojAssemblyReference.cache
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.csproj.CoreCompileInputs.cache
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.AssemblyInfoInputs.cache
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.AssemblyInfo.cs
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.dll
+C:\Users\sturm\source\repos\GuessTheNum\obj\Debug\netcoreapp2.1\GuessTheNum.pdb
