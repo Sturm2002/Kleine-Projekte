@@ -5,19 +5,19 @@
 
 *********
 
-1/10 - Balancing
-**4/10 - Status to show HP regen or Effects
 2/10 - More Enemys
+1/10 - Death ?
 
-6/10 - Better Minimap System
 6/10 - Minimap Flashlight Item
 
+4/10 - Cheating Items
 8/10 - Saving / Loading
 7/10 - Intense Enemy Fights
 8/10 - Walls
 9/10 - Story ?
 8/10 - Bosses
-10/10 Multiplayer
+8/10 - Trading / Coins
+10/10 - Multiplayer
 
 <<<<Bugs>>>>
 
@@ -38,6 +38,17 @@ V0.4 / 15.12.2020
 -Show Items after Open Chest
 -Item Draw after Rarity
 -Duration Potions Work
+
+V0.5 / 22.12.2020
+-Multiple Objects on 1 Field
+-Options Menu
+-Changed Fight System x2
+-New Map System (Buggy)
+
+V0.6 / 23.12.2020
+-Fixed New Map System
+-Cheats
+
 
 """
 
@@ -67,6 +78,12 @@ Move      | mv          | Allows to Move
 Attack    | atk,atack   | As the Name Says
 Use Item  | ui,useitem  | Allows to Use an Item
 Inventory | inv         | Shows the Inventory
+Show Map  | sm,map      | Shows the map
+Statistics| stats,stat  | Shows your Statistics
+Save      | sv          | Saves the Game
+Load      | load        | Loads a Game
+Options   | opt,option  | Shows the Options
+CheatMenu | cm,cheat    | Opens the Cheat Menu
 
 """
 
@@ -95,17 +112,16 @@ InputOpt = [
         ["Up",["up","Up","uP","UP","u","U"]],
         ["Right",["Right","right","rIGHT","R","r"]],
         ["Down",["Down","down","d","D"]],
-        ["Left",["Left","left","l","L"]],
-        ],
-    [["Attack","Atk","attack","atack","Atack","atk"],   
-        ],
-    [["OpenChest","Open Chest","Open chest","openchest","open chest","oc","OC","Oc","oC"],
-        ],
-    [["Inventory","Inv","inv","Inventory","Showinventory","showinventory","show inventory","Show Inventory","show inv","Show Inv"]
-        ],
-    [["Use Item","useitem","UseItem","ui","Ui","uI","UI"]
-        ],
-    [["Help","help","h","H","?"]]
+        ["Left",["Left","left","l","L"]],],
+    [["Attack","Atk","attack","atack","Atack","atk"],   ],
+    [["OpenChest","Open Chest","Open chest","openchest","open chest","oc","OC","Oc","oC"],],
+    [["Inventory","Inv","inv","Inventory","Showinventory","showinventory","show inventory","Show Inventory","show inv","Show Inv"]],
+    [["Use Item","useitem","UseItem","ui","Ui","uI","UI"]],
+    [["Help","help","h","H","?"]],
+    [["Stats","stat","Stat","stats","Statistics","statistics"]],
+    [["Options","options","option","Option","opt","Opt"]],
+    [["Show Map","show map","show Map","ShowMap","Sm","SM","sm","sM"]],
+    [["Cheat Menu","cheatmenu","cheat menu","cheats","cheat","cm","Cm","CM"]]
         ]
 
 Items = [
@@ -144,7 +160,7 @@ class Player():
     def __init__(self,StartPosX=0,StartPosY=0,Health=100,StandDmg=10,StandDefense=20,ArmorPen=1):
         self.Xpos = StartPosX
         self.Ypos = StartPosY
-        self.MaxHealth = 1000
+        self.MaxHealth = 100
         self.Health = Health
         self.AmountKeys = 4
         self.StandDmg = StandDmg
@@ -152,13 +168,13 @@ class Player():
         self.DefenseMultShield = 1
         self.DefenseMultPotion = 1
         self.DmgMultiplier = 1
-        self.MapRange = 1
+        self.MapRange = 2
         self.ArmorPenMult = 1
         self.StandArmorPen = ArmorPen
         self.PotionEffects = []
         #self.Inventory = []
         self.GenedFields = []
-        
+
         self.Inventory = [[colorama.Fore.WHITE+"Wooden Sword"+colorama.Fore.WHITE,"Swrd",0.1,0.1,1],
         [colorama.Fore.WHITE+"Stone Sword"+colorama.Fore.WHITE,"Swrd",0.3,0.3,1],
         [colorama.Fore.WHITE+"Cooper Sword"+colorama.Fore.WHITE,"Swrd",0.4,0.4,1],
@@ -178,18 +194,34 @@ class Player():
         [colorama.Fore.WHITE+"Weak Regeneration Potion"+colorama.Fore.WHITE,"Potn","Regen",10,3,1],
         [colorama.Fore.CYAN+"Strong Regeneration Potion"+colorama.Fore.WHITE,"Potn","Regen",25,3,3],
         [colorama.Fore.CYAN+"Toughness Potion"+colorama.Fore.WHITE,"Potn","ArmorPen",0.2,5,3]]
-        
+
+        self.StatKilledEnemys = 0
+        self.StatAttacks = 0
+        self.StatDmgDealt = 0
+        self.StatOpenedChests = 0
+        self.StatFoundItems = 0
+        self.StatDmgGot = 0
+        self.StatPotionsDrank = 0
+        self.StatMovesDone = 0
+        self.StatUsedItems = 0
+
+        self.OptPerfMode = True
+        self.OptCheatMode = False
+
     def Goto(self,NewXpos,NewYPos):
         self.Xpos = NewXpos
         self.Ypos = NewYPos
 
     def Move(self,Dir="Right"):
+        ClearCons()
+        CheckEnemys()
+        ClearCons()
         if CheckInpInArr(Dir,0,1,1):
             self.Ypos += 1
             for i in self.GenedFields:
                 if i == [self.Xpos,self.Ypos]:
                     return
-            GenMap("u")
+            GenMap("u",randint(0,3))
             self.GenedFields.append([self.Xpos,self.Ypos])
             
 
@@ -198,7 +230,7 @@ class Player():
             for i in self.GenedFields:
                 if i == [self.Xpos,self.Ypos]:
                     return
-            GenMap("r")
+            GenMap("r",randint(0,3))
             self.GenedFields.append([self.Xpos,self.Ypos])
 
         elif CheckInpInArr(Dir,0,3,1):
@@ -206,7 +238,7 @@ class Player():
             for i in self.GenedFields:
                 if i == [self.Xpos,self.Ypos]:
                     return
-            GenMap("d")
+            GenMap("d",randint(0,3))
             self.GenedFields.append([self.Xpos,self.Ypos])
 
         elif CheckInpInArr(Dir,0,4,1):
@@ -214,7 +246,7 @@ class Player():
             for i in self.GenedFields:
                 if i == [self.Xpos,self.Ypos]:
                     return
-            GenMap("l")
+            GenMap("l",randint(0,3))
             self.GenedFields.append([self.Xpos,self.Ypos])
 
 
@@ -227,6 +259,7 @@ class Player():
         if DmgGot <= 0 or DmgGot == None:
             DmgGot = 0
         self.Health -= DmgGot
+        self.StatDmgGot += DmgGot
 
         return DmgGot
         
@@ -270,31 +303,40 @@ class Player():
         for enem in EnemysArr:
             if self.Ypos == enem.Ypos and self.Xpos == enem.Xpos and enem.alive == True:
                 enemCounter += 1
+                #for enem2 in EnemysArr:
+                    #if self.Ypos == enem2.Ypos and self.Xpos == enem2.Xpos and enem2.alive == True:
+                       # PlayerGotDmg = enem2.AttackPlayer()
+                        #if PlayerGotDmg <= 0 or PlayerGotDmg == None:
+                        #    printstr("You got " +colorama.Fore.RED+str()+"0 Dmg"+colorama.Fore.WHITE+"!\n")
 
-                PlayerGotDmg = enem.AttackPlayer()
-                if PlayerGotDmg <= 0 or PlayerGotDmg == None:
-                    printstr("You got " +colorama.Fore.RED+str()+"0 Dmg"+colorama.Fore.WHITE+"!\n")
-
-                else:
-                    printstr("You got " +colorama.Fore.RED+str(PlayerGotDmg)+" Dmg"+colorama.Fore.WHITE+"! By "+enem.LatestAttack+"\n")
-
+                       # else:
+                        #self.StatDmgGot += PlayerGotDmg
+                         #   printstr("You got " +colorama.Fore.RED+str(PlayerGotDmg)+" Dmg"+colorama.Fore.WHITE+"! By "+enem2.LatestAttack+colorama.Fore.WHITE)
+                CheckEnemys()
                 if enemCounter == int(inp):
                 
                     enem.GetAttacked()
+                    self.StatAttacks += 1
                     
                     if enem.Health <= 0:
                         enem.alive = False
                         #PlayField[enem.Ypos][enem.Xpos] = ""
                         if len(enem.Inventory) <= 0 and enem.AmountKeys <= 0:
+                            self.StatDmgDealt += (self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))
+                            self.StatKilledEnemys += 1
                             return str(enem.Name) + " Got " + str((self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))) + " Dmg! And is Dead!\n"
                         elif len(enem.Inventory) > 0 and enem.AmountKeys <= 0:
                             returnStr = ""
                             for j in enem.Inventory:
                                 User.Inventory.append(j)
+                                User.StatFoundItems += 1
                             
+                            self.StatDmgDealt += (self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))
+                            self.StatKilledEnemys += 1
                             returnStr += str(enem.Name) + " Got " + str((self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))) + " Dmg! And is Dead!\nThe "+enem.Name+" dropped :\n"
                             for j in enem.Inventory:
                                 returnStr += "- "+str(j[0]) + "\n"
+                                self.StatFoundItems += 1
                             del enem
                             return returnStr
                         elif len(enem.Inventory) <= 0 and enem.AmountKeys > 0:
@@ -302,9 +344,14 @@ class Player():
                             if enem.AmountKeys == 1:
                                 returnStr2 = ""                    
                                 returnStr2 = str(enem.Name) + " Got " + str((self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))) + " Dmg! And is Dead!\nThe "+str(enem.Name)+" dropped :\n"+ colorama.Fore.YELLOW + str(enem.AmountKeys)+colorama.Fore.WHITE +" Key"
+                                self.StatDmgDealt += (self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))
+                                self.StatKilledEnemys += 1
+                                
                                 del enem
                                 return returnStr2
-                            else: 
+                            else:
+                                self.StatDmgDealt += (self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))
+                                self.StatKilledEnemys += 1
                                 returnStr3 = ""                       
                                 returnStr3 = str(enem.Name) + " Got " + str((self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))) + " Dmg! And is Dead!\nThe "+str(enem.Name)+" dropped :\n"+ colorama.Fore.YELLOW + str(enem.AmountKeys)+colorama.Fore.WHITE +" Keys"
                                 del enem
@@ -314,11 +361,13 @@ class Player():
                         #for enem in EnemysArr:
                             #if enem.Xpos == User.Xpos and enem.Ypos == User.Ypos:
                                 #printstr("You got " +colorama.Fore.RED+str(enem.AttackPlayer())+" Dmg"+colorama.Fore.WHITE+"!\n")
+                        self.StatDmgDealt += (self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))
                         return str(enem.Name) + " Got " + str((self.StandDmg * self.DmgMultiplier-(enem.Defense-(self.StandArmorPen*self.ArmorPenMult)))) + " Dmg! And has Now " + str(enem.Health) + " Hp\n"
                         
 
 
                 if enem.alive == False:
+                    self.StatKilledEnemys += 1
                     del enem
             else:
                 pass       
@@ -327,13 +376,18 @@ class Player():
         
     def OpenChest(self):
         global ChestsArr
+        ClearCons()
+        CheckEnemys()
+        ClearCons()
         OutString = ""
         for i in ChestsArr:
-            if self.Ypos == i.Ypos and self.Xpos == i.Xpos:
+            if self.Ypos == i.Ypos and self.Xpos == i.Xpos and i.empty == False:
                 if self.AmountKeys <= 0:
                     return "You Don't have a Key for That!\n"
                 if self.AmountKeys > 0:
+                    self.StatOpenedChests += 1
                     for j in i.Inventory: 
+                        self.StatFoundItems += 1
                         self.Inventory.append(j)
                         OutString += "- "+ j[0] + "\n"
                     if len(OutString) == 0:
@@ -348,6 +402,8 @@ class Player():
 
     def ShowInventory(self):
         ClearCons()
+        CheckEnemys()
+        ClearCons()
         OutString = ""
         OutString += (">>Inventory<<\n\nKeys:  "+colorama.Fore.YELLOW+str(self.AmountKeys)+colorama.Fore.WHITE+"\n")
         for i in range(len(self.Inventory)):
@@ -355,6 +411,8 @@ class Player():
         return OutString
 
     def UseItem(self):
+        CheckEnemys()
+        ClearCons()
         printstr(self.ShowInventory())
         printstr("Which item to use?\n")
         ItemToUse = input()
@@ -365,6 +423,7 @@ class Player():
             if not ItemToUse.isnumeric:
                 printstr("Faulty Input!")
             CorrectInput = True
+            self.StatUsedItems += 1
         if self.Inventory[int(ItemToUse)][1] == "Swrd":
 
             self.DmgMultiplier = 1
@@ -383,6 +442,7 @@ class Player():
             del self.Inventory[int(ItemToUse)]
 
         elif self.Inventory[int(ItemToUse)][1] == "Potn":
+            self.StatPotionsDrank += 1
             if self.Inventory[int(ItemToUse)][2] == "Health":
                 self.Health += self.Inventory[int(ItemToUse)][3]
                 if self.Health >= self.MaxHealth:
@@ -495,16 +555,16 @@ class Enemy():
         if User.Xpos == self.Xpos and User.Ypos == self.Ypos:
             randnum = randint(1,100)
 
-            if randnum >0 and randnum <50:
+            if randnum >0 and randnum <=50:
                 return self.LightAttack()
 
-            elif randnum >50 and randnum < 80:
+            elif randnum >50 and randnum <= 80:
                 return self.MediumAttack()
 
-            elif randnum >80 and randnum < 95:
+            elif randnum >80 and randnum <= 95:
                 return self.HeavyAttack()
 
-            elif randnum > 95 and randnum < 101:
+            elif randnum > 95 and randnum <= 100:
                 return self.CritAttack()
 
     def GetAttacked(self):
@@ -579,6 +639,19 @@ def GetInput(inp):
         ClearCons()
         printstr(LoostHelp)
         pass
+    elif CheckInpInArr(inp,6,0):
+        ClearCons()
+        printstr(Statistics())
+        pass
+    elif CheckInpInArr(inp,7,0):
+        ClearCons()
+        ShowOptions()
+    elif CheckInpInArr(inp,8,0):
+        ClearCons()
+        printstr(ShowMap())
+    elif CheckInpInArr(inp,9,0):
+        ClearCons()
+        ShowCheats()
 
 def GetMoveInput(inp):
     print("Please Direction!")
@@ -621,14 +694,23 @@ def CheckInpInArr(Inp,index1=0,index2=0,index3=100):
 def ClearCons():
     os.system("cls")
 
-def printstr(inStr,speed=0.005):
-    for i in inStr:
-        print(i,end="")
-        sleep(speed)
+def printstr(inStr,speed=0.002):
+    if speed == 0.001337:
+        for i in inStr:
+            print(i,end="")
+            sleep(speed)
+
+
+    elif User.OptPerfMode == False:
+        for i in inStr:
+            print(i,end="")
+            sleep(speed)
+    elif User.OptPerfMode == True:
+        print(inStr)
 
 def ChoosePlayerClass():
     global User
-    printstr("Please Choose a Class\n"+colorama.Fore.BLUE+"1.Assassin"+colorama.Fore.WHITE+" | "+colorama.Fore.RED+"2.Attaker"+colorama.Fore.WHITE+" | "+colorama.Fore.YELLOW+"3.Knight"+colorama.Fore.WHITE+"\n\n")
+    print("Please Choose a Class\n"+colorama.Fore.BLUE+"1.Assassin"+colorama.Fore.WHITE+" | "+colorama.Fore.RED+"2.Attaker"+colorama.Fore.WHITE+" | "+colorama.Fore.YELLOW+"3.Knight"+colorama.Fore.WHITE+"\n\n")
     inp = input()
     if inp == "Assassin" or inp == "1":
         User = Player(Health=60,StandDmg=30,StandDefense=5)
@@ -641,167 +723,263 @@ def ChoosePlayerClass():
         User = Player()
 
 def ShowMap():
-    global mm
-    mm =[
-    "x","x","x",
-    "x","x","x",
-    "x","x","x"
-    ]
+    global EnemysArr
+    MMap = [["#" for i in range(User.MapRange*2+1)] for j in range(User.MapRange*2+1)]
+    Outstr = ""
 
-    for chest in ChestsArr:
-        if chest.Ypos == User.Ypos +1 and chest.Xpos == User.Xpos -1:
-            if chest.empty != True:
-                mm[0] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
+    PosCheckX = 0
+    PosCheckY = 0 
+    for y in range(0,User.MapRange*2+1):
+        PosCheckY = y - User.MapRange
+        for x in range(0,User.MapRange*2+1):
+            PosCheckX = x - User.MapRange
+            
+            for enem in EnemysArr:
+                if enem.Xpos == User.Xpos + PosCheckX and enem.Ypos == User.Ypos + (PosCheckY)*-1:
+                    MMap[y][x] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
 
-        elif chest.Ypos == User.Ypos +1 and chest.Xpos == User.Xpos:
-            if chest.empty != True:
-                mm[1] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
+            for chest in ChestsArr:
+                if chest.Xpos == User.Xpos + PosCheckX and chest.Ypos == User.Ypos + (PosCheckY)*-1:
+                        MMap[y][x] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
+                    
+    for y in range(len(MMap)):
+        for x in range(len(MMap)):
+            Outstr += MMap[y][x]
+        Outstr += "\n"
+    return Outstr
 
-        elif chest.Ypos == User.Ypos +1 and chest.Xpos == User.Xpos +1:
-            if chest.empty != True:
-                mm[2] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-        elif chest.Ypos == User.Ypos and chest.Xpos == User.Xpos-1:
-            if chest.empty != True:
-                mm[3] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-        elif chest.Ypos == User.Ypos and chest.Xpos == User.Xpos +1:
-            if chest.empty != True:
-                mm[5] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-        elif chest.Ypos == User.Ypos -1 and chest.Xpos == User.Xpos-1:
-            if chest.empty != True:
-                mm[6] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-        elif chest.Ypos == User.Ypos -1 and chest.Xpos == User.Xpos:
-            if chest.empty != True:
-                mm[7] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-        elif chest.Ypos == User.Ypos -1 and chest.Xpos == User.Xpos+1:
-            if chest.empty != True:
-                mm[8] = colorama.Fore.YELLOW+"#"+colorama.Fore.WHITE
-
-    for enem in EnemysArr:
-        if enem.Ypos == User.Ypos +1 and enem.Xpos == User.Xpos -1:
-            if enem.alive == True:
-                mm[0] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos +1 and enem.Xpos == User.Xpos:
-            if enem.alive == True:
-                mm[1] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos +1 and enem.Xpos == User.Xpos +1:
-            if enem.alive == True:
-                mm[2] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos  and enem.Xpos == User.Xpos-1:
-            if enem.alive == True:
-                mm[3] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos and enem.Xpos == User.Xpos +1:
-            if enem.alive == True:
-                mm[5] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos -1 and enem.Xpos == User.Xpos-1:
-            if enem.alive == True:
-                mm[6] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos -1 and enem.Xpos == User.Xpos:
-            if enem.alive == True:
-                mm[7] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-        elif enem.Ypos == User.Ypos -1 and enem.Xpos == User.Xpos+1:
-            if enem.alive == True:
-                mm[8] = colorama.Fore.RED+"#"+colorama.Fore.WHITE
-
-    for j in range(len(mm)):
-        if mm[j] == "x":
-            mm[j] = colorama.Fore.WHITE + "#"
-
-def GenMap(dire):
+def GenMap(dire,value):
     if dire == "u":
         for x in range(User.Xpos-User.MapRange,User.Xpos+User.MapRange):
-            NewY = User.Ypos + User.MapRange
+            NewY = User.Ypos + User.MapRange +1
+            val = value
 
             for field in User.GenedFields:
                 if field == [x,NewY]:
                     break
             else:
-                enRandNum = randint(1,5)
-                randnum = randint(1,7)
-                if randnum == 1:
-                    NewChest = Chest(x,NewY,randint(0,4))
-                    ChestsArr.append(NewChest)
-                    User.GenedFields.append([x,NewY,randint(0,10)])
+                for i in range(val):
+                    enRandNum = randint(1,5)
+                    randnum = randint(1,7)
+                    if randnum == 1:
+                        NewChest = Chest(x,NewY,randint(0,4))
+                        ChestsArr.append(NewChest)
+                        User.GenedFields.append([x,NewY,randint(0,10)])
+                        val -= 1
 
-                elif enRandNum == 1:
-                    NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
-                    EnemysArr.append(NewZombie)
-                    User.GenedFields.append([x,NewY])
+                    elif enRandNum == 1:
+                        NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
+                        EnemysArr.append(NewZombie)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
+                    if val <= 0:
+                        return
 
     elif dire == "r":
         for NewY in range(User.Ypos-User.MapRange,User.Ypos+User.MapRange):
-            x = User.Xpos + User.MapRange
+            x = User.Xpos + User.MapRange +1
+            val = value
 
             for field in User.GenedFields:
                 if field == [x,NewY]:
                     break
             else:
-                enRandNum = randint(1,5)
-                randnum = randint(1,7)
-                if randnum == 1:
-                    NewChest = Chest(x,NewY,randint(0,4))
-                    ChestsArr.append(NewChest)
-                    User.GenedFields.append([x,NewY])
+                for i in range(val):
+                    enRandNum = randint(1,5)
+                    randnum = randint(1,7)
+                    if randnum == 1:
+                        NewChest = Chest(x,NewY,randint(0,4))
+                        ChestsArr.append(NewChest)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
 
-                elif enRandNum == 1:
-                    NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
-                    EnemysArr.append(NewZombie)
-                    User.GenedFields.append([x,NewY])
+                    elif enRandNum == 1:
+                        NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
+                        EnemysArr.append(NewZombie)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
+                    if val <= 0:
+                        return
 
     elif dire == "d":
         for x in range(User.Xpos-User.MapRange,User.Xpos+User.MapRange):
-            NewY = User.Ypos - User.MapRange
+            NewY = User.Ypos - User.MapRange -1 
+            val = value
 
             for field in User.GenedFields:
                 if field == [x,NewY]:
                     break
             else:
-                enRandNum = randint(1,5)
-                randnum = randint(1,7)
-                if randnum == 1:
-                    NewChest = Chest(x,NewY,randint(0,4))
-                    ChestsArr.append(NewChest)
-                    User.GenedFields.append([x,NewY])
+                for i in range(val):
+                    enRandNum = randint(1,5)
+                    randnum = randint(1,7)
+                    if randnum == 1:
+                        NewChest = Chest(x,NewY,randint(0,4))
+                        ChestsArr.append(NewChest)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
 
-                elif enRandNum == 1:
-                    NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
-                    EnemysArr.append(NewZombie)
-                    User.GenedFields.append([x,NewY])
+                    elif enRandNum == 1:
+                        NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
+                        EnemysArr.append(NewZombie)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
+                    if val <= 0:
+                        return
 
     elif dire == "l":
         for NewY in range(User.Ypos-User.MapRange,User.Ypos+User.MapRange):
-            x = User.Xpos - User.MapRange
+            x = User.Xpos - User.MapRange -1
+            val = value
 
             for field in User.GenedFields:
                 if field == [x,NewY]:
                     break
             else:
-                enRandNum = randint(1,5)
-                randnum = randint(1,7)
-                if randnum == 1:
-                    NewChest = Chest(x,NewY,randint(0,4))
-                    ChestsArr.append(NewChest)
-                    User.GenedFields.append([x,NewY])
+                for i in range(val):
+                    enRandNum = randint(1,5)
+                    randnum = randint(1,7)
+                    if randnum == 1:
+                        NewChest = Chest(x,NewY,randint(0,4))
+                        ChestsArr.append(NewChest)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
 
-                elif enRandNum == 1:
-                    NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
-                    EnemysArr.append(NewZombie)
-                    User.GenedFields.append([x,NewY])
+                    elif enRandNum == 1:
+                        NewZombie = Enemy(x,NewY,50,10,(colorama.Fore.GREEN +"Zombie"+colorama.Fore.WHITE))
+                        EnemysArr.append(NewZombie)
+                        User.GenedFields.append([x,NewY])
+                        val -= 1
+                    if val <= 0:
+                        return
+
+def CheckEnemys():
+    ClearCons()
+    Outstr = ""
+    FoundEnem = False
+    for enem2 in EnemysArr:
+        if User.Ypos == enem2.Ypos and User.Xpos == enem2.Xpos and enem2.alive == True:
+            FoundEnem = True
+            PlayerGotDmg = enem2.AttackPlayer()
+            if PlayerGotDmg <= 0 or PlayerGotDmg == None:
+                Outstr += ("You got " +colorama.Fore.RED+str()+"0 Dmg"+colorama.Fore.WHITE+"!"+"\n")
+
+            else:
+                #self.StatDmgGot += PlayerGotDmg
+                Outstr+= ("You got " +colorama.Fore.RED+str(PlayerGotDmg)+" Dmg"+colorama.Fore.WHITE+"! By "+enem2.LatestAttack+colorama.Fore.WHITE+"\n")
+    printstr(Outstr)
+    if FoundEnem == True:
+        input() 
+    #Outstr
+
+def ShowOptions():
+    InCorrectInput = True
+    while InCorrectInput:
+        ClearCons()
+        printstr(f"""
+    0 - Exit
+    1 - Change Performance Mode - {str(User.OptPerfMode)}
+    2 - Change Cheat Mode - {str(User.OptCheatMode)}
+
+    """)
+        inp = input()
+        if inp == "0":
+            InCorrectInput = False
+        elif inp == "1":
+            if User.OptPerfMode == True:
+                User.OptPerfMode = False
+                
+            elif User.OptPerfMode == False:
+                User.OptPerfMode = True
+        elif inp == "2":
+            if User.OptCheatMode == True:
+                User.OptCheatMode = False
+            elif User.OptCheatMode == False:
+                User.OptCheatMode = True
+
+def ShowCheats():
+    InCorInp = True
+    while InCorInp:
+        ClearCons()
+        printstr("""
+    0- Exit
+    1- Give Item
+    2- Set Attribute
+
+    """)
+        inp = input()
+        if inp == "0":
+            InCorInp = False
+        elif inp == "1":
+            printstr("Coming Soon!")
+        elif inp == "2":
+            CheatChangeAttributes()
+
+def GetNumInp():
+    InCorInp = True
+    while InCorInp:
+        inp = input("Value : ")
+        if not inp.isnumeric or inp == None or inp == "" or inp == " ":
+            printstr("Faulty Input!\n")
+        InCorInp = False
+    return int(inp)
+
+def CheatChangeAttributes():
+    InCorInp = True
+    while InCorInp:
+        ClearCons()
+        printstr("""
+    0- Exit
+    1- Health
+    2- Max Health
+    3- Map Range
+    4- Stand Damage
+    5- Stand Defense
+    6- Amount Keys
+    """)   
+        inp = GetNumInp()
+        
+        if inp == 0:
+            InCorInp = False
+        elif inp == 1:
+            ClearCons()
+            User.Health = GetNumInp()
+        elif inp == 2:
+            ClearCons()
+            User.MaxHealth = GetNumInp()
+        elif inp == 3:
+            ClearCons()
+            User.MapRange = GetNumInp()
+        elif inp == 4:
+            ClearCons()
+            User.StandDmg = GetNumInp()
+        elif inp == 5:
+            ClearCons()
+            User.StandDefense = GetNumInp()
+        elif inp == 6:
+            ClearCons()
+            User.AmountKeys = GetNumInp()
+
+def Statistics():
+    OutString = f"""
+    Killed Enemys   : {User.StatKilledEnemys}
+        DMG Dealt       : {User.StatDmgDealt}
+    Amount Attacks  : {User.StatAttacks}
+    DMG Got         : {User.StatDmgGot}
+    Openend Chests  : {User.StatOpenedChests}
+    Found Items     : {User.StatFoundItems}
+    Used Items      : {User.StatUsedItems}
+    Potions Drinked : {User.StatPotionsDrank}
+    Total Moves     : {User.StatMovesDone}
+
+
+    Loost by Sturmy
+    """
+    return OutString
 
 #InitPlayfield()
 ClearCons()
-printstr(StartString,0.001)
+printstr(StartString,0.001337)
 sleep(2)
 ClearCons()
 ChoosePlayerClass()
@@ -811,19 +989,19 @@ while running:
     ClearCons()
     PotnStr = ""
     PotnStr += "+"+colorama.Fore.LIGHTRED_EX+str(User.CheckPotions())
-    ShowMap()
+    #ShowMap()
     printstr(f"""
 Status :  {colorama.Fore.RED+str(int(User.Health))+colorama.Fore.WHITE} Hp | {User.Xpos}x / {User.Ypos}y
           {colorama.Fore.LIGHTRED_EX+ str(round(User.StandDmg*User.DmgMultiplier,0))+colorama.Fore.WHITE} Dmg | {colorama.Fore.LIGHTBLUE_EX+str(User.StandDefense * User.DefenseMultShield)+colorama.Fore.WHITE} Def | {colorama.Fore.MAGENTA+str(User.StandArmorPen*User.ArmorPenMult)+colorama.Fore.WHITE} Armor Pen
 
-                               MAP
- Inventory -+- Move          +-+-+-+
-            |                |{mm[0]}|{mm[1]}|{mm[2]}|
-  Use Item -+- Attack        +-+-+-+
-            |                |{mm[3]}|$|{mm[5]}|
-        Open Chest           +-+-+-+
-                             |{mm[6]}|{mm[7]}|{mm[8]}|
-                             +-+-+-+
+"""+
+str(ShowMap())
+
++"""                            
+
+Move | Attack | Open Chest | Use Item | Show Map | Inventory
+
+Help | Options
 
 """
     )
@@ -832,5 +1010,6 @@ Status :  {colorama.Fore.RED+str(int(User.Health))+colorama.Fore.WHITE} Hp | {Us
     printstr(">>Please Choose Action<<\n\n")
     
     GetInput(input())
+    User.StatMovesDone += 1
     #print(EnemysArr)
     input()
