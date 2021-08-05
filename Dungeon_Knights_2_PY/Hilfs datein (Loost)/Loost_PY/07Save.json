@@ -1,0 +1,407 @@
+{
+    "PXpos": 0,
+    "PYpos": 0,
+    "PMaxHealth": 100,
+    "PHealth": 70,
+    "PAmountKeys": 4,
+    "PStandDmg": 25,
+    "PStandDef": 10,
+    "PDefMultShd": 1,
+    "PDefMultPotn": 1,
+    "PDmgMult": 1,
+    "PMapRange": 2,
+    "PArmorPenMult": 1,
+    "PStandArmorPen": 5,
+    "PPotionEffects": [],
+    "PGendFields": [
+        [
+            0,
+            0
+        ],
+        [
+            -2,
+            2
+        ],
+        [
+            -1,
+            2
+        ],
+        [
+            0,
+            2
+        ],
+        [
+            1,
+            2
+        ],
+        [
+            2,
+            2
+        ],
+        [
+            -2,
+            1
+        ],
+        [
+            -1,
+            1
+        ],
+        [
+            0,
+            1
+        ],
+        [
+            1,
+            1
+        ],
+        [
+            2,
+            1
+        ],
+        [
+            -2,
+            0
+        ],
+        [
+            -1,
+            0
+        ],
+        [
+            1,
+            0
+        ],
+        [
+            2,
+            0
+        ],
+        [
+            -2,
+            -1
+        ],
+        [
+            -1,
+            -1
+        ],
+        [
+            0,
+            -1
+        ],
+        [
+            1,
+            -1
+        ],
+        [
+            2,
+            -1
+        ],
+        [
+            -2,
+            -2
+        ],
+        [
+            -1,
+            -2
+        ],
+        [
+            0,
+            -2
+        ],
+        [
+            1,
+            -2
+        ],
+        [
+            2,
+            -2
+        ],
+        [
+            0,
+            -1
+        ],
+        [
+            -2,
+            -3
+        ],
+        [
+            -1,
+            -3
+        ],
+        [
+            0,
+            -3
+        ],
+        [
+            1,
+            -3
+        ],
+        [
+            2,
+            -3
+        ],
+        [
+            0,
+            0
+        ]
+    ],
+    "PInventory": [],
+    "PStatKilledEnemys": 0,
+    "PStatAttacks": 0,
+    "PStatDmgDealt": 0,
+    "PStatOpenedChests": 0,
+    "PStatFoundItems": 0,
+    "PStatDmgGot": 0,
+    "PStatPotionsDrank": 0,
+    "PStatMovesDone": 5,
+    "PStatUsedItems": 0,
+    "POptPerfMode": true,
+    "POptCheatMode": false,
+    "Enemys": [
+        [
+            "\u001b[32mZombie\u001b[37m",
+            -1,
+            2,
+            50,
+            7,
+            10,
+            0,
+            true,
+            0,
+            0,
+            []
+        ],
+        [
+            "\u001b[90mSkeleton\u001b[37m",
+            0,
+            1,
+            35,
+            3,
+            15,
+            0,
+            true,
+            0,
+            0,
+            []
+        ],
+        [
+            "\u001b[32mZombie\u001b[37m",
+            2,
+            -1,
+            50,
+            7,
+            10,
+            0,
+            true,
+            2,
+            0,
+            []
+        ],
+        [
+            "\u001b[32mZombie\u001b[37m",
+            -2,
+            -2,
+            50,
+            7,
+            10,
+            0,
+            true,
+            0,
+            0,
+            [
+                [
+                    "\u001b[92mMedium Health Potion\u001b[37m",
+                    "Potn",
+                    "Health",
+                    50,
+                    0,
+                    2
+                ]
+            ]
+        ],
+        [
+            "\u001b[32mZombie\u001b[37m",
+            -2,
+            -3,
+            50,
+            7,
+            10,
+            0,
+            true,
+            0,
+            0,
+            []
+        ],
+        [
+            "\u001b[90mSkeleton\u001b[37m",
+            0,
+            -3,
+            35,
+            3,
+            15,
+            0,
+            true,
+            0,
+            0,
+            []
+        ]
+    ],
+    "Chests": [
+        [
+            -1,
+            1,
+            2,
+            false,
+            [
+                [
+                    "\u001b[37mWooden Shield\u001b[37m",
+                    "Shld",
+                    0.3,
+                    1
+                ],
+                [
+                    "\u001b[37mWooden Shield\u001b[37m",
+                    "Shld",
+                    0.3,
+                    1
+                ]
+            ]
+        ],
+        [
+            -2,
+            0,
+            4,
+            false,
+            [
+                [
+                    "\u001b[92mSilver Sword\u001b[37m",
+                    "Swrd",
+                    0.5,
+                    0.5,
+                    2
+                ],
+                [
+                    "\u001b[37mWooden Sword\u001b[37m",
+                    "Swrd",
+                    0.2,
+                    0.2,
+                    1
+                ],
+                [
+                    "\u001b[37mStone Sword\u001b[37m",
+                    "Swrd",
+                    0.3,
+                    0.3,
+                    1
+                ]
+            ]
+        ],
+        [
+            1,
+            -1,
+            3,
+            false,
+            [
+                [
+                    "\u001b[37mWeak Regeneration Potion\u001b[37m",
+                    "Potn",
+                    "Regen",
+                    10,
+                    3,
+                    1
+                ],
+                [
+                    "\u001b[37mSmall Health Potion\u001b[37m",
+                    "Potn",
+                    "Health",
+                    20,
+                    0,
+                    1
+                ],
+                [
+                    "\u001b[37mCooper Sword\u001b[37m",
+                    "Swrd",
+                    0.35,
+                    0.35,
+                    1
+                ]
+            ]
+        ],
+        [
+            1,
+            -1,
+            2,
+            false,
+            [
+                [
+                    "\u001b[37mWeak Regeneration Potion\u001b[37m",
+                    "Potn",
+                    "Regen",
+                    10,
+                    3,
+                    1
+                ],
+                [
+                    "\u001b[37mSmall Health Potion\u001b[37m",
+                    "Potn",
+                    "Health",
+                    20,
+                    0,
+                    1
+                ]
+            ]
+        ],
+        [
+            1,
+            -1,
+            3,
+            false,
+            [
+                [
+                    "\u001b[37mSmall Health Potion\u001b[37m",
+                    "Potn",
+                    "Health",
+                    20,
+                    0,
+                    1
+                ],
+                [
+                    "\u001b[92mSilver Sword\u001b[37m",
+                    "Swrd",
+                    0.5,
+                    0.5,
+                    2
+                ]
+            ]
+        ],
+        [
+            2,
+            -1,
+            2,
+            false,
+            [
+                [
+                    "\u001b[92mIron Sword\u001b[37m",
+                    "Swrd",
+                    0.45,
+                    0.45,
+                    2
+                ]
+            ]
+        ],
+        [
+            0,
+            -2,
+            1,
+            false,
+            [
+                [
+                    "\u001b[37mWeak Regeneration Potion\u001b[37m",
+                    "Potn",
+                    "Regen",
+                    10,
+                    3,
+                    1
+                ]
+            ]
+        ]
+    ]
+}

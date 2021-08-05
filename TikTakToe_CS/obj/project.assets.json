@@ -694,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sturm\\source\\repos\\TikTakToe\\TikTakToe.csproj",
+      "projectUniqueName": "C:\\Users\\sturm\\OneDrive\\Github\\Kleine-Projekte\\TikTakToe_CS\\TikTakToe.csproj",
       "projectName": "TikTakToe",
-      "projectPath": "C:\\Users\\sturm\\source\\repos\\TikTakToe\\TikTakToe.csproj",
+      "projectPath": "C:\\Users\\sturm\\OneDrive\\Github\\Kleine-Projekte\\TikTakToe_CS\\TikTakToe.csproj",
       "packagesPath": "C:\\Users\\sturm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sturm\\source\\repos\\TikTakToe\\obj\\",
+      "outputPath": "C:\\Users\\sturm\\OneDrive\\Github\\Kleine-Projekte\\TikTakToe_CS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
