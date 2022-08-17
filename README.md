@@ -58,9 +58,18 @@ a diy game i made with my friends, it's actually a card game based on a german c
 **GuessTheNum_CS** / 60 lines:
 you can guess a number...such wow very cool. i was learning C# so i just uploaded it here, take it or leave it
 
+**SturmysBackgroundTools_PY** / 1290 lines:
+Small Collection of tools running in the Background, first run CreateNewJson.py, edit some paths in the conf.json and then run SysTrayIcon.pyw
+Contains:
+- KeyGrabber
+- NetCheck (Find infos about local devices)
+- A Small useless Discord Bot
+- A NFC Reader Access System (Simulated) Needs an actuall nfc reader an ESP8266 with code on it
+- Implemented Sherlock to stalk your friends cause you're a creep
+- Other small things
 
-
- 
+**CarTeslaMultiMedia_PY** / 214 lines:
+Currently Stopped Project, i want to buy myself a project-car in the future, and of course with a lot of technic, and a selfmade Infotainment system, like a Tesla-like Screen in the middle, digital Dashboard, and HUD etc. this is basically it, but due to the fact it will still take some time for me to get my Mazda MX-5 NA (Miata) i kinda lost the interest for now
  
   
       
