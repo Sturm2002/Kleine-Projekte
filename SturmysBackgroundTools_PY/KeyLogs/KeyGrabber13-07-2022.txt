@@ -1,0 +1,9 @@
+[WhatsApp]
+##########
+felix, mein passwort ist alexistcool1.  [ENTER]
+
+---------------
+[Spotify Premium]
+##########
+media_play_pause
+---------------

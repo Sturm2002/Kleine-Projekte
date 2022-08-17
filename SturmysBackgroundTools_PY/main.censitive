@@ -1,0 +1,2 @@
+// Format <globPattern>:[keyRegex]
+.json:*key*,*token*,*Key*,*Token*,*PW*
