@@ -24,7 +24,7 @@
     },
     "DiscordBot": {
         "Settings": {
-            "SecretToken": "NzgzMzY2MzAwMzY1MDk1MDAy.GnLuEv.KNnZ39lOFH726WPSSJOn1_2a2qd4SN8qFXCbkU"
+            "SecretToken": "SECRETTOKEN"
         }
     },
     "NetCheck": {
