@@ -71,7 +71,8 @@ Contains:
 **CarTeslaMultiMedia_PY** / 214 lines:
 Currently Stopped Project, i want to buy myself a project-car in the future, and of course with a lot of technic, and a selfmade Infotainment system, like a Tesla-like Screen in the middle, digital Dashboard, and HUD etc. this is basically it, but due to the fact it will still take some time for me to get my Mazda MX-5 NA (Miata) i kinda lost the interest for now
  
-  
+**UnterstufenProjekt_FA13_AlexBruksch_NickDziewior_JeanNeumann_DanielPyka_PY** / ? Lines:
+Junior Project
       
    
   
