@@ -1,0 +1,16 @@
+hashlib
+random
+pygame
+webbrowser
+globalVars
+Datenbank
+os
+sys
+copy
+tkinter
+PIL
+time
+sqlite3
+typing
+copy
+operator
