@@ -31,7 +31,7 @@ diy database management tool
 **slideclock_console.py** / 67 lines:
 real-time slideclock
 
-**literallyafuckingbutton.py** / 41 lines:
+**literallyabutton.py** / 41 lines:
 a button that can change color when pushed  
 
 # Folder Description
